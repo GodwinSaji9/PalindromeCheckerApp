@@ -1,6 +1,6 @@
 /**
 Description:
-This class validates a palindrome by converting the string into a character array and comparing characters using the two-pointer technique.
+This class validates a palindrome by using stack
 
  @author Godwin
  @version 5.0
