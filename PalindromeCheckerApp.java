@@ -2,10 +2,10 @@ import java.util.Scanner;
 
 /**
 Description:
- This class demonstrates basic palindrome validation using a hardcoded string value
+ This class checks whether a string is a palindrome by reversing the string and comparing it with the original value.
 
  @author Godwin
- @version 2.0
+ @version 3.0
 **/
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
@@ -14,11 +14,7 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
         
-        String reversed = "";
-        
-        for (int i = input.length() - 1; i >= 0; i--) {
-            reversed += input.charAt(i);
-        }
+        String reversed = new StringBuilder(input).reverse().toString();
         
         if (input.equalsIgnoreCase(reversed)) {
             System.out.println("It is a palindrome.");
