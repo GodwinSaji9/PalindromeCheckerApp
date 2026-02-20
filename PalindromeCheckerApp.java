@@ -1,27 +1,31 @@
-import java.util.Scanner;
-
 /**
 Description:
- This class checks whether a string is a palindrome by reversing the string and comparing it with the original value.
+This class validates a palindrome by converting the string into a character array and comparing characters using the two-pointer technique.
 
  @author Godwin
- @version 3.0
+ @version 4.0
 **/
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        System.out.print("Enter a string: ");
-        String input = sc.nextLine();
-        
-        String reversed = new StringBuilder(input).reverse().toString();
-        
-        if (input.equalsIgnoreCase(reversed)) {
+        String input = "radar";
+        char[] chars = input.toCharArray();
+        int start = 0;
+        int end = chars.length - 1;
+        boolean isPalindrome = true;
+
+        while (start < end) {
+            if (chars[start] != chars[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+
+        if (isPalindrome) {
             System.out.println("It is a palindrome.");
         } else {
             System.out.println("It is not a palindrome.");
         }
-        
-        sc.close();
     }
 }
