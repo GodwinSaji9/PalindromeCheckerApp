@@ -1,6 +1,6 @@
 /**
 Description:
-This class demonstrates palindrome validation using a queue and a stack
+This class demonstrates palindrome validation using deque
 
  @author Godwin
  @version 7.0
