@@ -1,47 +1,55 @@
 /**
 Description:
-This class demonstrates palindrome validation by implementing encapsulation
+This class demonstrates palindrome validation by implementing strategy design pattern
 
  @author Godwin
- @version 11.0
+ @version 12.0
 **/
-class PalindromeCheckerApp {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-    public boolean checkPalindrome(String input) {
+class StackStrategy implements PalindromeStrategy {
 
-        if (input == null)
-            return false;
+    public boolean check(String input) {
+
+        if (input == null) return false;
 
         String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        java.util.Stack<Character> stack = new java.util.Stack<>();
 
-        char[] arr = normalized.toCharArray();
+        for (char c : normalized.toCharArray())
+            stack.push(c);
 
-        int start = 0;
-        int end = arr.length - 1;
-
-        while (start < end) {
-
-            if (arr[start] != arr[end]) {
+        for (char c : normalized.toCharArray())
+            if (c != stack.pop())
                 return false;
-            }
-
-            start++;
-            end--;
-        }
 
         return true;
+    }
+}
+
+public class PalindromeCheckerApp {
+
+    private PalindromeStrategy strategy;
+
+    public PalindromeCheckerApp(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean check(String input) {
+        return strategy.check(input);
     }
 
     public static void main(String[] args) {
 
-        PalindromeCheckerApp checker = new PalindromeCheckerApp();
+        PalindromeCheckerApp app =
+                new PalindromeCheckerApp(new StackStrategy());
 
         String input = "Level";
 
-        if (checker.checkPalindrome(input)) {
-            System.out.println("It is a palindrome.");
-        } else {
-            System.out.println("It is not a palindrome.");
-        }
+        System.out.println(app.check(input)
+                ? "It is a palindrome."
+                : "It is not a palindrome.");
     }
 }
