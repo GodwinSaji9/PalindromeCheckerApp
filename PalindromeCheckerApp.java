@@ -1,3 +1,10 @@
+/**
+Description:
+This class demonstrates palindrome validation using singly linked list
+
+ @author Godwin
+ @version 8.0
+**/
 import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
