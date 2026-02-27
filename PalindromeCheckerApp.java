@@ -1,55 +1,69 @@
 /**
 Description:
-This class demonstrates palindrome validation by implementing strategy design pattern
+This class does performance test of palindrome checking algorithms
 
  @author Godwin
- @version 12.0
+ @version 13.0
 **/
-interface PalindromeStrategy {
-    boolean check(String input);
-}
+public class PalindromeCheckerApp {
 
-class StackStrategy implements PalindromeStrategy {
+    public static void main(String[] args) {
 
-    public boolean check(String input) {
+        String input = "A man a plan a canal Panama";
+        int iterations = 100000;
 
-        if (input == null) return false;
+        benchmark("Two Pointer", iterations, () -> twoPointer(input));
+        benchmark("Stack", iterations, () -> stackMethod(input));
+        benchmark("Recursion", iterations, () -> recursionMethod(input));
+    }
 
-        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+    static void benchmark(String name, int iterations, Runnable method) {
+
+        long start = System.nanoTime();
+
+        for (int i = 0; i < iterations; i++)
+            method.run();
+
+        long end = System.nanoTime();
+
+        System.out.println(name + " Execution Time: " + (end - start) + " ns");
+    }
+
+    static boolean twoPointer(String input) {
+
+        String s = input.replaceAll("\\s+", "").toLowerCase();
+        int start = 0, end = s.length() - 1;
+
+        while (start < end)
+            if (s.charAt(start++) != s.charAt(end--))
+                return false;
+
+        return true;
+    }
+
+    static boolean stackMethod(String input) {
+
+        String s = input.replaceAll("\\s+", "").toLowerCase();
         java.util.Stack<Character> stack = new java.util.Stack<>();
 
-        for (char c : normalized.toCharArray())
+        for (char c : s.toCharArray())
             stack.push(c);
 
-        for (char c : normalized.toCharArray())
+        for (char c : s.toCharArray())
             if (c != stack.pop())
                 return false;
 
         return true;
     }
-}
 
-public class PalindromeCheckerApp {
-
-    private PalindromeStrategy strategy;
-
-    public PalindromeCheckerApp(PalindromeStrategy strategy) {
-        this.strategy = strategy;
+    static boolean recursionMethod(String input) {
+        String s = input.replaceAll("\\s+", "").toLowerCase();
+        return recursiveCheck(s, 0, s.length() - 1);
     }
 
-    public boolean check(String input) {
-        return strategy.check(input);
-    }
-
-    public static void main(String[] args) {
-
-        PalindromeCheckerApp app =
-                new PalindromeCheckerApp(new StackStrategy());
-
-        String input = "Level";
-
-        System.out.println(app.check(input)
-                ? "It is a palindrome."
-                : "It is not a palindrome.");
+    static boolean recursiveCheck(String s, int start, int end) {
+        if (start >= end) return true;
+        if (s.charAt(start) != s.charAt(end)) return false;
+        return recursiveCheck(s, start + 1, end - 1);
     }
 }
