@@ -1,36 +1,30 @@
 /**
 Description:
-This class demonstrates palindrome validation using singly linked list
+This class demonstrates palindrome validation using recursive function
 
  @author Godwin
- @version 8.0
+ @version 9.0
 **/
-import java.util.LinkedList;
-
 public class PalindromeCheckerApp {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         String input = "level";
 
-        LinkedList<Character> list = new LinkedList<>();
-
-        for (char c : input.toCharArray()) {
-            list.add(c);
-        }
-
-        boolean isPalindrome = true;
-
-        while (list.size() > 1) {
-            if (!list.removeFirst().equals(list.removeLast())) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        if (isPalindrome) {
+        if (isPalindrome(input, 0, input.length() - 1)) {
             System.out.println("It is a palindrome.");
         } else {
             System.out.println("It is not a palindrome.");
         }
+    }
+
+    static boolean isPalindrome(String str, int start, int end) {
+
+        if (start >= end)
+            return true;
+
+        if (str.charAt(start) != str.charAt(end))
+            return false;
+
+        return isPalindrome(str, start + 1, end - 1);
     }
 }
