@@ -1,30 +1,35 @@
 /**
 Description:
-This class demonstrates palindrome validation using recursive function
+This class demonstrates palindrome validation after preprocessing the input string 
 
  @author Godwin
- @version 9.0
+ @version 10.0
 **/
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
-        String input = "level";
 
-        if (isPalindrome(input, 0, input.length() - 1)) {
+        String input = "A man, a plan, a canal: Panama";
+        
+        if (isPalindrome(input)) {
             System.out.println("It is a palindrome.");
         } else {
             System.out.println("It is not a palindrome.");
         }
     }
 
-    static boolean isPalindrome(String str, int start, int end) {
+    public static boolean isPalindrome(String input) {
 
-        if (start >= end)
-            return true;
+        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        if (str.charAt(start) != str.charAt(end))
-            return false;
+        for (int i = 0; i < normalized.length() / 2; i++) {
 
-        return isPalindrome(str, start + 1, end - 1);
+            if (normalized.charAt(i) != 
+                normalized.charAt(normalized.length() - 1 - i)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
